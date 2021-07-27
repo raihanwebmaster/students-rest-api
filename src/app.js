@@ -32,14 +32,34 @@ mongoose
 //   })
 // });
 
-
-
 // ******************* Async Await **********************
 app.post("/students", async (req, res) => {
   try {
     const user = new student(req.body);
     const createUser = await user.save();
     res.status(201).send(createUser);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+// read the data of registered Students
+app.get("/students", async (req, res) => {
+  try {
+    const studentsData = await student.find();
+    res.status(201).send(studentsData);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+// get the indivisual of student data using id
+
+app.get("/students/:id", async (req, res) => {
+  try {
+    const _id = req.params.id;
+    const studentData = await student.findById(_id);
+    res.status(201).send(studentData);
   } catch (error) {
     res.status(400).send(error.message);
   }
