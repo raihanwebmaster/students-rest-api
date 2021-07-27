@@ -21,13 +21,28 @@ mongoose
   .catch((error) => {
     console.log(error.message);
   });
-app.post("/students", (req, res) => {
-  const user = new student(req.body);
-  user.save().then(() => {
-    res.status(201).send(user);
-  }).catch((error)=>{
-      res.status(400).send(error.message);
-  })
+
+// ******************************** Promise ********************************
+// app.post("/students", (req, res) => {
+//   const user = new student(req.body);
+//   user.save().then(() => {
+//     res.status(201).send(user);
+//   }).catch((error)=>{
+//       res.status(400).send(error.message);
+//   })
+// });
+
+
+
+// ******************* Async Await **********************
+app.post("/students", async (req, res) => {
+  try {
+    const user = new student(req.body);
+    const createUser = await user.save();
+    res.status(201).send(createUser);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
 });
 
 app.listen(port, () => {
