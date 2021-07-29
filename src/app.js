@@ -65,6 +65,21 @@ app.get("/students/:id", async (req, res) => {
   }
 });
 
+// delete the students by it id
+app.delete("/students/:id", async (req, res) => {
+  ``;
+  try {
+    const _id = req.params.id;
+    const deleteStudent = await student.findByIdAndDelete(_id);
+    if (!_id) {
+      return res.status(400).send("id dose not here");
+    }
+    res.send(deleteStudent);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 app.listen(port, () => {
   console.log(`connection is setup at ${port}`);
 });
