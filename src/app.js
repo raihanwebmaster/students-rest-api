@@ -32,6 +32,8 @@ mongoose
 //   })
 // });
 
+
+
 // ******************* Async Await **********************
 app.post("/students", async (req, res) => {
   try {
@@ -43,6 +45,8 @@ app.post("/students", async (req, res) => {
   }
 });
 
+
+
 // read the data of registered Students
 app.get("/students", async (req, res) => {
   try {
@@ -52,6 +56,9 @@ app.get("/students", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+
+
+
 
 // get the indivisual of student data using id
 
@@ -64,6 +71,25 @@ app.get("/students/:id", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+
+
+
+
+// update the students by it id
+app.patch("/students/:id", async (req, res) => {
+  try {
+    const _id = req.params.id;
+    const updateStudent = await student.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
+    res.status(200).send(updateStudent);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+
+
 
 // delete the students by it id
 app.delete("/students/:id", async (req, res) => {
@@ -79,6 +105,9 @@ app.delete("/students/:id", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+
+
 
 app.listen(port, () => {
   console.log(`connection is setup at ${port}`);
